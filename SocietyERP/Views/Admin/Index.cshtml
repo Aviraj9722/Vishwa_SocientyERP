@@ -1,0 +1,141 @@
+﻿@model DataLayer.tblAdmin
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+@ViewBag.msg
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+
+    <div class="row">
+
+        <div class="col-4">
+            <div class="form-horizontal mt-5 p-3">
+                <h4 class="text-center">Admin Info</h4>
+
+                <div>
+                    @if (ViewBag.msg != null)
+                    {
+                        <br />
+                        <b class="alert alert-danger">@ViewBag.msg</b>
+                    }
+                </div>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.MobileNo, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.MobileNo, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.MobileNo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.LoginName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.LoginName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.LoginName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CreatedOn, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.CreatedOn, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CreatedOn, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Create" class="btn btn-default" />
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+
+        <div class="col-8 mt-5">
+            <table class="table table-bordered table-striped-columns" style="margin-top:20px">
+                <thead>
+                    <tr>
+                        <th>Operations</th>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>MobileNo</th>
+                        <th>Address</th>
+                        <th>LoginName</th>
+                        <th>Password</th>
+                        <th>CreatedOn</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in (IEnumerable<DataLayer.tblAdmin>)ViewBag.AdminList)
+                    {
+                        <tr>
+                            <td>Operations</td>
+                            <td>@item.ID</td>
+                            <td>@item.Name</td>
+                            <td>@item.Email</td>
+                            <td>@item.MobileNo</td>
+                            <td>@item.Address</td>
+                            <td>@item.LoginName</td>
+                            <td>@item.Password</td>
+                            <th>@item.CreatedOn</th>
+                        </tr>
+                    }
+
+                </tbody>
+                </table>
+
+        </div>
+
+        <div class="col-4">
+
+        </div>
+
+    </div>
+
+
+}
+

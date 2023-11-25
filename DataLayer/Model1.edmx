@@ -1,0 +1,802 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="tblAdmin">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="MobileNo" Type="nvarchar" MaxLength="12" />
+          <Property Name="Address" Type="nvarchar" MaxLength="50" />
+          <Property Name="LoginName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedOn" Type="date" />
+        </EntityType>
+        <EntityType Name="tblComplaint">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MemberId" Type="int" />
+          <Property Name="SecretaryId" Type="int" />
+          <Property Name="Reason" Type="nvarchar(max)" />
+          <Property Name="DateOfComplaint" Type="date" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tblExpenses">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AcctId" Type="int" />
+          <Property Name="Amount" Type="float" />
+          <Property Name="GenLedgerId" Type="int" />
+          <Property Name="ModeOfPayment" Type="nvarchar" MaxLength="50" />
+          <Property Name="Date" Type="date" />
+          <Property Name="Narration" Type="nvarchar(max)" />
+          <Property Name="CreatedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="tblGeneralLedger">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LedgerName" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="tblMember">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="10" />
+          <Property Name="MobileNo" Type="nvarchar" MaxLength="12" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="FlatNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="WingName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ResidentialAddress" Type="nvarchar(max)" />
+          <Property Name="LoginName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedOn" Type="date" />
+          <Property Name="CreatedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="tblSecretary">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="MobileNo" Type="nvarchar" MaxLength="12" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address" Type="nvarchar" MaxLength="50" />
+          <Property Name="LoginName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="tblSocietyMaster">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="SecretaryId" Type="int" />
+          <Property Name="LoginName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="IFSCCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="MemberId" Type="int" />
+          <Property Name="AdminId" Type="int" />
+        </EntityType>
+        <EntityType Name="tblTransaction">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ExpensesAcctId" Type="int" />
+          <Property Name="MemberId" Type="int" />
+          <Property Name="Amount" Type="float" />
+          <Property Name="TransactionType" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModeOfPayment" Type="nvarchar" MaxLength="50" />
+          <Property Name="TranDate" Type="date" />
+          <Property Name="Narration" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="FK_tblComplaint_tblMember">
+          <End Role="tblMember" Type="Self.tblMember" Multiplicity="0..1" />
+          <End Role="tblComplaint" Type="Self.tblComplaint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblMember">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblComplaint">
+              <PropertyRef Name="MemberId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblComplaint_tblSecretary">
+          <End Role="tblSecretary" Type="Self.tblSecretary" Multiplicity="0..1" />
+          <End Role="tblComplaint" Type="Self.tblComplaint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblSecretary">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblComplaint">
+              <PropertyRef Name="SecretaryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblExpenses_tblGeneralLedger">
+          <End Role="tblGeneralLedger" Type="Self.tblGeneralLedger" Multiplicity="0..1" />
+          <End Role="tblExpenses" Type="Self.tblExpenses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblGeneralLedger">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblExpenses">
+              <PropertyRef Name="GenLedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblExpenses_tblSecretary">
+          <End Role="tblSecretary" Type="Self.tblSecretary" Multiplicity="0..1" />
+          <End Role="tblExpenses" Type="Self.tblExpenses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblSecretary">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblExpenses">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblMember_tblSecretary">
+          <End Role="tblSecretary" Type="Self.tblSecretary" Multiplicity="0..1" />
+          <End Role="tblMember" Type="Self.tblMember" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblSecretary">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblMember">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblSecretary_tblSocietyMaster">
+          <End Role="tblSocietyMaster" Type="Self.tblSocietyMaster" Multiplicity="0..1" />
+          <End Role="tblSecretary" Type="Self.tblSecretary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblSocietyMaster">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblSecretary">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblSocietyMaster_tblAdmin">
+          <End Role="tblAdmin" Type="Self.tblAdmin" Multiplicity="0..1" />
+          <End Role="tblSocietyMaster" Type="Self.tblSocietyMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAdmin">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblSocietyMaster">
+              <PropertyRef Name="AdminId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblTransaction_tblExpenses">
+          <End Role="tblExpenses" Type="Self.tblExpenses" Multiplicity="0..1" />
+          <End Role="tblTransaction" Type="Self.tblTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblExpenses">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblTransaction">
+              <PropertyRef Name="ExpensesAcctId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblTransaction_tblMember">
+          <End Role="tblMember" Type="Self.tblMember" Multiplicity="0..1" />
+          <End Role="tblTransaction" Type="Self.tblTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblMember">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblTransaction">
+              <PropertyRef Name="MemberId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblAdmin" EntityType="Self.tblAdmin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblComplaint" EntityType="Self.tblComplaint" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblExpenses" EntityType="Self.tblExpenses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblGeneralLedger" EntityType="Self.tblGeneralLedger" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblMember" EntityType="Self.tblMember" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblSecretary" EntityType="Self.tblSecretary" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblSocietyMaster" EntityType="Self.tblSocietyMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblTransaction" EntityType="Self.tblTransaction" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tblComplaint_tblMember" Association="Self.FK_tblComplaint_tblMember">
+            <End Role="tblMember" EntitySet="tblMember" />
+            <End Role="tblComplaint" EntitySet="tblComplaint" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblComplaint_tblSecretary" Association="Self.FK_tblComplaint_tblSecretary">
+            <End Role="tblSecretary" EntitySet="tblSecretary" />
+            <End Role="tblComplaint" EntitySet="tblComplaint" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblExpenses_tblGeneralLedger" Association="Self.FK_tblExpenses_tblGeneralLedger">
+            <End Role="tblGeneralLedger" EntitySet="tblGeneralLedger" />
+            <End Role="tblExpenses" EntitySet="tblExpenses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblExpenses_tblSecretary" Association="Self.FK_tblExpenses_tblSecretary">
+            <End Role="tblSecretary" EntitySet="tblSecretary" />
+            <End Role="tblExpenses" EntitySet="tblExpenses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblMember_tblSecretary" Association="Self.FK_tblMember_tblSecretary">
+            <End Role="tblSecretary" EntitySet="tblSecretary" />
+            <End Role="tblMember" EntitySet="tblMember" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblSecretary_tblSocietyMaster" Association="Self.FK_tblSecretary_tblSocietyMaster">
+            <End Role="tblSocietyMaster" EntitySet="tblSocietyMaster" />
+            <End Role="tblSecretary" EntitySet="tblSecretary" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblSocietyMaster_tblAdmin" Association="Self.FK_tblSocietyMaster_tblAdmin">
+            <End Role="tblAdmin" EntitySet="tblAdmin" />
+            <End Role="tblSocietyMaster" EntitySet="tblSocietyMaster" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblTransaction_tblExpenses" Association="Self.FK_tblTransaction_tblExpenses">
+            <End Role="tblExpenses" EntitySet="tblExpenses" />
+            <End Role="tblTransaction" EntitySet="tblTransaction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblTransaction_tblMember" Association="Self.FK_tblTransaction_tblMember">
+            <End Role="tblMember" EntitySet="tblMember" />
+            <End Role="tblTransaction" EntitySet="tblTransaction" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="tblAdmin">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MobileNo" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LoginName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="tblSocietyMasters" Relationship="Self.FK_tblSocietyMaster_tblAdmin" FromRole="tblAdmin" ToRole="tblSocietyMaster" />
+        </EntityType>
+        <EntityType Name="tblComplaint">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MemberId" Type="Int32" />
+          <Property Name="SecretaryId" Type="Int32" />
+          <Property Name="Reason" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfComplaint" Type="DateTime" Precision="0" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblMember" Relationship="Self.FK_tblComplaint_tblMember" FromRole="tblComplaint" ToRole="tblMember" />
+          <NavigationProperty Name="tblSecretary" Relationship="Self.FK_tblComplaint_tblSecretary" FromRole="tblComplaint" ToRole="tblSecretary" />
+        </EntityType>
+        <EntityType Name="tblExpens">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AcctId" Type="Int32" />
+          <Property Name="Amount" Type="Double" />
+          <Property Name="GenLedgerId" Type="Int32" />
+          <Property Name="ModeOfPayment" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="Narration" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <NavigationProperty Name="tblGeneralLedger" Relationship="Self.FK_tblExpenses_tblGeneralLedger" FromRole="tblExpenses" ToRole="tblGeneralLedger" />
+          <NavigationProperty Name="tblSecretary" Relationship="Self.FK_tblExpenses_tblSecretary" FromRole="tblExpenses" ToRole="tblSecretary" />
+          <NavigationProperty Name="tblTransactions" Relationship="Self.FK_tblTransaction_tblExpenses" FromRole="tblExpenses" ToRole="tblTransaction" />
+        </EntityType>
+        <EntityType Name="tblGeneralLedger">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LedgerName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblExpenses" Relationship="Self.FK_tblExpenses_tblGeneralLedger" FromRole="tblGeneralLedger" ToRole="tblExpenses" />
+        </EntityType>
+        <EntityType Name="tblMember">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="MobileNo" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FlatNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="WingName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ResidentialAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LoginName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="0" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <NavigationProperty Name="tblComplaints" Relationship="Self.FK_tblComplaint_tblMember" FromRole="tblMember" ToRole="tblComplaint" />
+          <NavigationProperty Name="tblSecretary" Relationship="Self.FK_tblMember_tblSecretary" FromRole="tblMember" ToRole="tblSecretary" />
+          <NavigationProperty Name="tblTransactions" Relationship="Self.FK_tblTransaction_tblMember" FromRole="tblMember" ToRole="tblTransaction" />
+        </EntityType>
+        <EntityType Name="tblSecretary">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MobileNo" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LoginName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <NavigationProperty Name="tblComplaints" Relationship="Self.FK_tblComplaint_tblSecretary" FromRole="tblSecretary" ToRole="tblComplaint" />
+          <NavigationProperty Name="tblExpenses" Relationship="Self.FK_tblExpenses_tblSecretary" FromRole="tblSecretary" ToRole="tblExpenses" />
+          <NavigationProperty Name="tblMembers" Relationship="Self.FK_tblMember_tblSecretary" FromRole="tblSecretary" ToRole="tblMember" />
+          <NavigationProperty Name="tblSocietyMaster" Relationship="Self.FK_tblSecretary_tblSocietyMaster" FromRole="tblSecretary" ToRole="tblSocietyMaster" />
+        </EntityType>
+        <EntityType Name="tblSocietyMaster">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SecretaryId" Type="Int32" />
+          <Property Name="LoginName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IFSCCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MemberId" Type="Int32" />
+          <Property Name="AdminId" Type="Int32" />
+          <NavigationProperty Name="tblAdmin" Relationship="Self.FK_tblSocietyMaster_tblAdmin" FromRole="tblSocietyMaster" ToRole="tblAdmin" />
+          <NavigationProperty Name="tblSecretaries" Relationship="Self.FK_tblSecretary_tblSocietyMaster" FromRole="tblSocietyMaster" ToRole="tblSecretary" />
+        </EntityType>
+        <EntityType Name="tblTransaction">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ExpensesAcctId" Type="Int32" />
+          <Property Name="MemberId" Type="Int32" />
+          <Property Name="Amount" Type="Double" />
+          <Property Name="TransactionType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModeOfPayment" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TranDate" Type="DateTime" Precision="0" />
+          <Property Name="Narration" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblExpens" Relationship="Self.FK_tblTransaction_tblExpenses" FromRole="tblTransaction" ToRole="tblExpenses" />
+          <NavigationProperty Name="tblMember" Relationship="Self.FK_tblTransaction_tblMember" FromRole="tblTransaction" ToRole="tblMember" />
+        </EntityType>
+        <Association Name="FK_tblSocietyMaster_tblAdmin">
+          <End Role="tblAdmin" Type="Self.tblAdmin" Multiplicity="0..1" />
+          <End Role="tblSocietyMaster" Type="Self.tblSocietyMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAdmin">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblSocietyMaster">
+              <PropertyRef Name="AdminId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblComplaint_tblMember">
+          <End Role="tblMember" Type="Self.tblMember" Multiplicity="0..1" />
+          <End Role="tblComplaint" Type="Self.tblComplaint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblMember">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblComplaint">
+              <PropertyRef Name="MemberId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblComplaint_tblSecretary">
+          <End Role="tblSecretary" Type="Self.tblSecretary" Multiplicity="0..1" />
+          <End Role="tblComplaint" Type="Self.tblComplaint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblSecretary">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblComplaint">
+              <PropertyRef Name="SecretaryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblExpenses_tblGeneralLedger">
+          <End Role="tblGeneralLedger" Type="Self.tblGeneralLedger" Multiplicity="0..1" />
+          <End Role="tblExpenses" Type="Self.tblExpens" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblGeneralLedger">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblExpenses">
+              <PropertyRef Name="GenLedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblExpenses_tblSecretary">
+          <End Role="tblSecretary" Type="Self.tblSecretary" Multiplicity="0..1" />
+          <End Role="tblExpenses" Type="Self.tblExpens" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblSecretary">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblExpenses">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblTransaction_tblExpenses">
+          <End Role="tblExpenses" Type="Self.tblExpens" Multiplicity="0..1" />
+          <End Role="tblTransaction" Type="Self.tblTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblExpenses">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblTransaction">
+              <PropertyRef Name="ExpensesAcctId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblMember_tblSecretary">
+          <End Role="tblSecretary" Type="Self.tblSecretary" Multiplicity="0..1" />
+          <End Role="tblMember" Type="Self.tblMember" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblSecretary">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblMember">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblTransaction_tblMember">
+          <End Role="tblMember" Type="Self.tblMember" Multiplicity="0..1" />
+          <End Role="tblTransaction" Type="Self.tblTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblMember">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblTransaction">
+              <PropertyRef Name="MemberId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblSecretary_tblSocietyMaster">
+          <End Role="tblSocietyMaster" Type="Self.tblSocietyMaster" Multiplicity="0..1" />
+          <End Role="tblSecretary" Type="Self.tblSecretary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblSocietyMaster">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblSecretary">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Society_Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="tblAdmins" EntityType="Self.tblAdmin" />
+          <EntitySet Name="tblComplaints" EntityType="Self.tblComplaint" />
+          <EntitySet Name="tblExpenses" EntityType="Self.tblExpens" />
+          <EntitySet Name="tblGeneralLedgers" EntityType="Self.tblGeneralLedger" />
+          <EntitySet Name="tblMembers" EntityType="Self.tblMember" />
+          <EntitySet Name="tblSecretaries" EntityType="Self.tblSecretary" />
+          <EntitySet Name="tblSocietyMasters" EntityType="Self.tblSocietyMaster" />
+          <EntitySet Name="tblTransactions" EntityType="Self.tblTransaction" />
+          <AssociationSet Name="FK_tblSocietyMaster_tblAdmin" Association="Self.FK_tblSocietyMaster_tblAdmin">
+            <End Role="tblAdmin" EntitySet="tblAdmins" />
+            <End Role="tblSocietyMaster" EntitySet="tblSocietyMasters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblComplaint_tblMember" Association="Self.FK_tblComplaint_tblMember">
+            <End Role="tblMember" EntitySet="tblMembers" />
+            <End Role="tblComplaint" EntitySet="tblComplaints" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblComplaint_tblSecretary" Association="Self.FK_tblComplaint_tblSecretary">
+            <End Role="tblSecretary" EntitySet="tblSecretaries" />
+            <End Role="tblComplaint" EntitySet="tblComplaints" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblExpenses_tblGeneralLedger" Association="Self.FK_tblExpenses_tblGeneralLedger">
+            <End Role="tblGeneralLedger" EntitySet="tblGeneralLedgers" />
+            <End Role="tblExpenses" EntitySet="tblExpenses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblExpenses_tblSecretary" Association="Self.FK_tblExpenses_tblSecretary">
+            <End Role="tblSecretary" EntitySet="tblSecretaries" />
+            <End Role="tblExpenses" EntitySet="tblExpenses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblTransaction_tblExpenses" Association="Self.FK_tblTransaction_tblExpenses">
+            <End Role="tblExpenses" EntitySet="tblExpenses" />
+            <End Role="tblTransaction" EntitySet="tblTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblMember_tblSecretary" Association="Self.FK_tblMember_tblSecretary">
+            <End Role="tblSecretary" EntitySet="tblSecretaries" />
+            <End Role="tblMember" EntitySet="tblMembers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblTransaction_tblMember" Association="Self.FK_tblTransaction_tblMember">
+            <End Role="tblMember" EntitySet="tblMembers" />
+            <End Role="tblTransaction" EntitySet="tblTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblSecretary_tblSocietyMaster" Association="Self.FK_tblSecretary_tblSocietyMaster">
+            <End Role="tblSocietyMaster" EntitySet="tblSocietyMasters" />
+            <End Role="tblSecretary" EntitySet="tblSecretaries" />
+          </AssociationSet>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(Model.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(Model.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+        </EntityContainer>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Society_Entities">
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="Model.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblAdmins">
+            <EntityTypeMapping TypeName="Model.tblAdmin">
+              <MappingFragment StoreEntitySet="tblAdmin">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="LoginName" ColumnName="LoginName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblComplaints">
+            <EntityTypeMapping TypeName="Model.tblComplaint">
+              <MappingFragment StoreEntitySet="tblComplaint">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="MemberId" ColumnName="MemberId" />
+                <ScalarProperty Name="SecretaryId" ColumnName="SecretaryId" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="DateOfComplaint" ColumnName="DateOfComplaint" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblExpenses">
+            <EntityTypeMapping TypeName="Model.tblExpens">
+              <MappingFragment StoreEntitySet="tblExpenses">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="AcctId" ColumnName="AcctId" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="GenLedgerId" ColumnName="GenLedgerId" />
+                <ScalarProperty Name="ModeOfPayment" ColumnName="ModeOfPayment" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Narration" ColumnName="Narration" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblGeneralLedgers">
+            <EntityTypeMapping TypeName="Model.tblGeneralLedger">
+              <MappingFragment StoreEntitySet="tblGeneralLedger">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="LedgerName" ColumnName="LedgerName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblMembers">
+            <EntityTypeMapping TypeName="Model.tblMember">
+              <MappingFragment StoreEntitySet="tblMember">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="FlatNo" ColumnName="FlatNo" />
+                <ScalarProperty Name="WingName" ColumnName="WingName" />
+                <ScalarProperty Name="ResidentialAddress" ColumnName="ResidentialAddress" />
+                <ScalarProperty Name="LoginName" ColumnName="LoginName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblSecretaries">
+            <EntityTypeMapping TypeName="Model.tblSecretary">
+              <MappingFragment StoreEntitySet="tblSecretary">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="LoginName" ColumnName="LoginName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblSocietyMasters">
+            <EntityTypeMapping TypeName="Model.tblSocietyMaster">
+              <MappingFragment StoreEntitySet="tblSocietyMaster">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="SecretaryId" ColumnName="SecretaryId" />
+                <ScalarProperty Name="LoginName" ColumnName="LoginName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="IFSCCode" ColumnName="IFSCCode" />
+                <ScalarProperty Name="MemberId" ColumnName="MemberId" />
+                <ScalarProperty Name="AdminId" ColumnName="AdminId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblTransactions">
+            <EntityTypeMapping TypeName="Model.tblTransaction">
+              <MappingFragment StoreEntitySet="tblTransaction">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ExpensesAcctId" ColumnName="ExpensesAcctId" />
+                <ScalarProperty Name="MemberId" ColumnName="MemberId" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="TransactionType" ColumnName="TransactionType" />
+                <ScalarProperty Name="ModeOfPayment" ColumnName="ModeOfPayment" />
+                <ScalarProperty Name="TranDate" ColumnName="TranDate" />
+                <ScalarProperty Name="Narration" ColumnName="Narration" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="Model.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="Model.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="Model.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="Model.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="Model.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Model.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Model.Store.sp_upgraddiagrams" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

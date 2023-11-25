@@ -1,0 +1,326 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="tblAdmin">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MobileNo" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LoginName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="tblSocietyMasters" Relationship="Self.FK_tblSocietyMaster_tblAdmin" FromRole="tblAdmin" ToRole="tblSocietyMaster" />
+  </EntityType>
+  <EntityType Name="tblComplaint">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MemberId" Type="Int32" />
+    <Property Name="SecretaryId" Type="Int32" />
+    <Property Name="Reason" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateOfComplaint" Type="DateTime" Precision="0" />
+    <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tblMember" Relationship="Self.FK_tblComplaint_tblMember" FromRole="tblComplaint" ToRole="tblMember" />
+    <NavigationProperty Name="tblSecretary" Relationship="Self.FK_tblComplaint_tblSecretary" FromRole="tblComplaint" ToRole="tblSecretary" />
+  </EntityType>
+  <EntityType Name="tblExpens">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AcctId" Type="Int32" />
+    <Property Name="Amount" Type="Double" />
+    <Property Name="GenLedgerId" Type="Int32" />
+    <Property Name="ModeOfPayment" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Date" Type="DateTime" Precision="0" />
+    <Property Name="Narration" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <NavigationProperty Name="tblGeneralLedger" Relationship="Self.FK_tblExpenses_tblGeneralLedger" FromRole="tblExpenses" ToRole="tblGeneralLedger" />
+    <NavigationProperty Name="tblSecretary" Relationship="Self.FK_tblExpenses_tblSecretary" FromRole="tblExpenses" ToRole="tblSecretary" />
+    <NavigationProperty Name="tblTransactions" Relationship="Self.FK_tblTransaction_tblExpenses" FromRole="tblExpenses" ToRole="tblTransaction" />
+  </EntityType>
+  <EntityType Name="tblGeneralLedger">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LedgerName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tblExpenses" Relationship="Self.FK_tblExpenses_tblGeneralLedger" FromRole="tblGeneralLedger" ToRole="tblExpenses" />
+  </EntityType>
+  <EntityType Name="tblMember">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="MobileNo" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FlatNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="WingName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ResidentialAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="LoginName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="0" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <NavigationProperty Name="tblComplaints" Relationship="Self.FK_tblComplaint_tblMember" FromRole="tblMember" ToRole="tblComplaint" />
+    <NavigationProperty Name="tblSecretary" Relationship="Self.FK_tblMember_tblSecretary" FromRole="tblMember" ToRole="tblSecretary" />
+    <NavigationProperty Name="tblTransactions" Relationship="Self.FK_tblTransaction_tblMember" FromRole="tblMember" ToRole="tblTransaction" />
+  </EntityType>
+  <EntityType Name="tblSecretary">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MobileNo" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LoginName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <NavigationProperty Name="tblComplaints" Relationship="Self.FK_tblComplaint_tblSecretary" FromRole="tblSecretary" ToRole="tblComplaint" />
+    <NavigationProperty Name="tblExpenses" Relationship="Self.FK_tblExpenses_tblSecretary" FromRole="tblSecretary" ToRole="tblExpenses" />
+    <NavigationProperty Name="tblMembers" Relationship="Self.FK_tblMember_tblSecretary" FromRole="tblSecretary" ToRole="tblMember" />
+    <NavigationProperty Name="tblSocietyMaster" Relationship="Self.FK_tblSecretary_tblSocietyMaster" FromRole="tblSecretary" ToRole="tblSocietyMaster" />
+  </EntityType>
+  <EntityType Name="tblSocietyMaster">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SecretaryId" Type="Int32" />
+    <Property Name="LoginName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IFSCCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MemberId" Type="Int32" />
+    <Property Name="AdminId" Type="Int32" />
+    <NavigationProperty Name="tblAdmin" Relationship="Self.FK_tblSocietyMaster_tblAdmin" FromRole="tblSocietyMaster" ToRole="tblAdmin" />
+    <NavigationProperty Name="tblSecretaries" Relationship="Self.FK_tblSecretary_tblSocietyMaster" FromRole="tblSocietyMaster" ToRole="tblSecretary" />
+  </EntityType>
+  <EntityType Name="tblTransaction">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ExpensesAcctId" Type="Int32" />
+    <Property Name="MemberId" Type="Int32" />
+    <Property Name="Amount" Type="Double" />
+    <Property Name="TransactionType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ModeOfPayment" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TranDate" Type="DateTime" Precision="0" />
+    <Property Name="Narration" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tblExpens" Relationship="Self.FK_tblTransaction_tblExpenses" FromRole="tblTransaction" ToRole="tblExpenses" />
+    <NavigationProperty Name="tblMember" Relationship="Self.FK_tblTransaction_tblMember" FromRole="tblTransaction" ToRole="tblMember" />
+  </EntityType>
+  <Association Name="FK_tblSocietyMaster_tblAdmin">
+    <End Role="tblAdmin" Type="Self.tblAdmin" Multiplicity="0..1" />
+    <End Role="tblSocietyMaster" Type="Self.tblSocietyMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblAdmin">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tblSocietyMaster">
+        <PropertyRef Name="AdminId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblComplaint_tblMember">
+    <End Role="tblMember" Type="Self.tblMember" Multiplicity="0..1" />
+    <End Role="tblComplaint" Type="Self.tblComplaint" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblMember">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tblComplaint">
+        <PropertyRef Name="MemberId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblComplaint_tblSecretary">
+    <End Role="tblSecretary" Type="Self.tblSecretary" Multiplicity="0..1" />
+    <End Role="tblComplaint" Type="Self.tblComplaint" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblSecretary">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tblComplaint">
+        <PropertyRef Name="SecretaryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblExpenses_tblGeneralLedger">
+    <End Role="tblGeneralLedger" Type="Self.tblGeneralLedger" Multiplicity="0..1" />
+    <End Role="tblExpenses" Type="Self.tblExpens" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblGeneralLedger">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tblExpenses">
+        <PropertyRef Name="GenLedgerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblExpenses_tblSecretary">
+    <End Role="tblSecretary" Type="Self.tblSecretary" Multiplicity="0..1" />
+    <End Role="tblExpenses" Type="Self.tblExpens" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblSecretary">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tblExpenses">
+        <PropertyRef Name="CreatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblTransaction_tblExpenses">
+    <End Role="tblExpenses" Type="Self.tblExpens" Multiplicity="0..1" />
+    <End Role="tblTransaction" Type="Self.tblTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblExpenses">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tblTransaction">
+        <PropertyRef Name="ExpensesAcctId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblMember_tblSecretary">
+    <End Role="tblSecretary" Type="Self.tblSecretary" Multiplicity="0..1" />
+    <End Role="tblMember" Type="Self.tblMember" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblSecretary">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tblMember">
+        <PropertyRef Name="CreatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblTransaction_tblMember">
+    <End Role="tblMember" Type="Self.tblMember" Multiplicity="0..1" />
+    <End Role="tblTransaction" Type="Self.tblTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblMember">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tblTransaction">
+        <PropertyRef Name="MemberId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblSecretary_tblSocietyMaster">
+    <End Role="tblSocietyMaster" Type="Self.tblSocietyMaster" Multiplicity="0..1" />
+    <End Role="tblSecretary" Type="Self.tblSecretary" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblSocietyMaster">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tblSecretary">
+        <PropertyRef Name="CreatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Society_Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="tblAdmins" EntityType="Self.tblAdmin" />
+    <EntitySet Name="tblComplaints" EntityType="Self.tblComplaint" />
+    <EntitySet Name="tblExpenses" EntityType="Self.tblExpens" />
+    <EntitySet Name="tblGeneralLedgers" EntityType="Self.tblGeneralLedger" />
+    <EntitySet Name="tblMembers" EntityType="Self.tblMember" />
+    <EntitySet Name="tblSecretaries" EntityType="Self.tblSecretary" />
+    <EntitySet Name="tblSocietyMasters" EntityType="Self.tblSocietyMaster" />
+    <EntitySet Name="tblTransactions" EntityType="Self.tblTransaction" />
+    <AssociationSet Name="FK_tblSocietyMaster_tblAdmin" Association="Self.FK_tblSocietyMaster_tblAdmin">
+      <End Role="tblAdmin" EntitySet="tblAdmins" />
+      <End Role="tblSocietyMaster" EntitySet="tblSocietyMasters" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblComplaint_tblMember" Association="Self.FK_tblComplaint_tblMember">
+      <End Role="tblMember" EntitySet="tblMembers" />
+      <End Role="tblComplaint" EntitySet="tblComplaints" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblComplaint_tblSecretary" Association="Self.FK_tblComplaint_tblSecretary">
+      <End Role="tblSecretary" EntitySet="tblSecretaries" />
+      <End Role="tblComplaint" EntitySet="tblComplaints" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblExpenses_tblGeneralLedger" Association="Self.FK_tblExpenses_tblGeneralLedger">
+      <End Role="tblGeneralLedger" EntitySet="tblGeneralLedgers" />
+      <End Role="tblExpenses" EntitySet="tblExpenses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblExpenses_tblSecretary" Association="Self.FK_tblExpenses_tblSecretary">
+      <End Role="tblSecretary" EntitySet="tblSecretaries" />
+      <End Role="tblExpenses" EntitySet="tblExpenses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblTransaction_tblExpenses" Association="Self.FK_tblTransaction_tblExpenses">
+      <End Role="tblExpenses" EntitySet="tblExpenses" />
+      <End Role="tblTransaction" EntitySet="tblTransactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblMember_tblSecretary" Association="Self.FK_tblMember_tblSecretary">
+      <End Role="tblSecretary" EntitySet="tblSecretaries" />
+      <End Role="tblMember" EntitySet="tblMembers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblTransaction_tblMember" Association="Self.FK_tblTransaction_tblMember">
+      <End Role="tblMember" EntitySet="tblMembers" />
+      <End Role="tblTransaction" EntitySet="tblTransactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblSecretary_tblSocietyMaster" Association="Self.FK_tblSecretary_tblSocietyMaster">
+      <End Role="tblSocietyMaster" EntitySet="tblSocietyMasters" />
+      <End Role="tblSecretary" EntitySet="tblSecretaries" />
+    </AssociationSet>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(Model.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(Model.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+  </EntityContainer>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+</Schema>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="7685a13945814f4aafc2c233399d4b95" Name="Diagram1">
+        <EntityTypeShape EntityType="Model.sysdiagram" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.tblAdmin" Width="1.5" PointX="0.75" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.tblComplaint" Width="1.5" PointX="9.75" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.tblExpens" Width="1.5" PointX="7.5" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.tblGeneralLedger" Width="1.5" PointX="5.25" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.tblMember" Width="1.5" PointX="7.5" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.tblSecretary" Width="1.5" PointX="5.25" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.tblSocietyMaster" Width="1.5" PointX="3" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.tblTransaction" Width="1.5" PointX="12.75" PointY="9.125" IsExpanded="true" />
+        <AssociationConnector Association="Model.FK_tblSocietyMaster_tblAdmin" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_tblComplaint_tblMember" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_tblComplaint_tblSecretary" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_tblExpenses_tblGeneralLedger" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_tblExpenses_tblSecretary" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_tblTransaction_tblExpenses" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_tblMember_tblSecretary" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_tblTransaction_tblMember" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_tblSecretary_tblSocietyMaster" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
