@@ -10,112 +10,116 @@ using DataLayer;
 
 namespace SocietyERP.Controllers
 {
-    public class tblMembersController : Controller
+    public class tblComplaintsController : Controller
     {
         private Society_Entities db = new Society_Entities();
 
-        // GET: tblMembers
+        // GET: tblComplaints
         public ActionResult Index()
         {
-            var tblMembers = db.tblMembers.Include(t => t.tblSecretary);
-            return View(tblMembers.ToList());
+            var tblComplaints = db.tblComplaints.Include(t => t.tblMember).Include(t => t.tblSecretary);
+            return View(tblComplaints.ToList());
         }
 
-        // GET: tblMembers/Details/5
+        // GET: tblComplaints/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            tblMember tblMember = db.tblMembers.Find(id);
-            if (tblMember == null)
+            tblComplaint tblComplaint = db.tblComplaints.Find(id);
+            if (tblComplaint == null)
             {
                 return HttpNotFound();
             }
-            return View(tblMember);
+            return View(tblComplaint);
         }
 
-        // GET: tblMembers/Create
+        // GET: tblComplaints/Create
         public ActionResult Create()
         {
-            ViewBag.CreatedBy = new SelectList(db.tblSecretaries, "ID", "Name");
+            ViewBag.MemberId = new SelectList(db.tblMembers, "ID", "Name");
+            ViewBag.SecretaryId = new SelectList(db.tblSecretaries, "ID", "Name");
             return View();
         }
 
-        // POST: tblMembers/Create
+        // POST: tblComplaints/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name,MobileNo,Email,FlatNo,WingName,ResidentialAddress,LoginName,Password,CreatedOn,CreatedBy")] tblMember tblMember)
+        public ActionResult Create([Bind(Include = "ID,MemberId,SecretaryId,Reason,DateOfComplaint,Status")] tblComplaint tblComplaint)
         {
             if (ModelState.IsValid)
             {
-                db.tblMembers.Add(tblMember);
+                db.tblComplaints.Add(tblComplaint);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CreatedBy = new SelectList(db.tblSecretaries, "ID", "Name", tblMember.CreatedBy);
-            return View(tblMember);
+            ViewBag.MemberId = new SelectList(db.tblMembers, "ID", "Name", tblComplaint.MemberId);
+            ViewBag.SecretaryId = new SelectList(db.tblSecretaries, "ID", "Name", tblComplaint.SecretaryId);
+            return View(tblComplaint);
         }
 
-        // GET: tblMembers/Edit/5
+        // GET: tblComplaints/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            tblMember tblMember = db.tblMembers.Find(id);
-            if (tblMember == null)
+            tblComplaint tblComplaint = db.tblComplaints.Find(id);
+            if (tblComplaint == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.CreatedBy = new SelectList(db.tblSecretaries, "ID", "Name", tblMember.CreatedBy);
-            return View(tblMember);
+            ViewBag.MemberId = new SelectList(db.tblMembers, "ID", "Name", tblComplaint.MemberId);
+            ViewBag.SecretaryId = new SelectList(db.tblSecretaries, "ID", "Name", tblComplaint.SecretaryId);
+            return View(tblComplaint);
         }
 
-        // POST: tblMembers/Edit/5
+        // POST: tblComplaints/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Name,MobileNo,Email,FlatNo,WingName,ResidentialAddress,LoginName,Password,CreatedOn,CreatedBy")] tblMember tblMember)
+        public ActionResult Edit([Bind(Include = "ID,MemberId,SecretaryId,Reason,DateOfComplaint,Status")] tblComplaint tblComplaint)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(tblMember).State = EntityState.Modified;
+                db.Entry(tblComplaint).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CreatedBy = new SelectList(db.tblSecretaries, "ID", "Name", tblMember.CreatedBy);
-            return View(tblMember);
+            ViewBag.MemberId = new SelectList(db.tblMembers, "ID", "Name", tblComplaint.MemberId);
+            ViewBag.SecretaryId = new SelectList(db.tblSecretaries, "ID", "Name", tblComplaint.SecretaryId);
+            return View(tblComplaint);
         }
 
-        // GET: tblMembers/Delete/5
+        // GET: tblComplaints/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            tblMember tblMember = db.tblMembers.Find(id);
-            if (tblMember == null)
+            tblComplaint tblComplaint = db.tblComplaints.Find(id);
+            if (tblComplaint == null)
             {
                 return HttpNotFound();
             }
-            return View(tblMember);
+            return View(tblComplaint);
         }
 
-        // POST: tblMembers/Delete/5
+        // POST: tblComplaints/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            tblMember tblMember = db.tblMembers.Find(id);
-            db.tblMembers.Remove(tblMember);
+            tblComplaint tblComplaint = db.tblComplaints.Find(id);
+            db.tblComplaints.Remove(tblComplaint);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
