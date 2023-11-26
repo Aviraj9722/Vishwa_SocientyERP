@@ -128,6 +128,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\tblGeneralLedgersController.cs" />
     <Compile Include="Controllers\tblMembersController.cs" />
+    <Compile Include="Controllers\tblSecretariesController.cs" />
     <Compile Include="Controllers\testController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -153,6 +154,11 @@
     <Content Include="Views\tblGeneralLedgers\Details.cshtml" />
     <Content Include="Views\tblGeneralLedgers\Edit.cshtml" />
     <Content Include="Views\tblGeneralLedgers\Index.cshtml" />
+    <Content Include="Views\tblSecretaries\Create.cshtml" />
+    <Content Include="Views\tblSecretaries\Delete.cshtml" />
+    <Content Include="Views\tblSecretaries\Details.cshtml" />
+    <Content Include="Views\tblSecretaries\Edit.cshtml" />
+    <Content Include="Views\tblSecretaries\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
