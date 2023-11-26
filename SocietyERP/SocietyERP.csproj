@@ -125,6 +125,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\tblComplaintsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -156,6 +157,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Default\" />
     <Folder Include="Views\Society\" />
     <Folder Include="Views\test\" />
   </ItemGroup>
